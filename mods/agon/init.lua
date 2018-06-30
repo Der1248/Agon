@@ -6,7 +6,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=10},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Minetest Version	    :  0.4.16",
+		text = "For Minetest 	  :  0.4.17",
 	})
 	player:hud_add({
 		hud_elem_type = "text",
@@ -14,7 +14,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=30},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Subgame Version	  :  2.1",
+		text = "Game Version	 :  2.2",
 	})
     
 end)
@@ -47,6 +47,7 @@ minetest.register_on_joinplayer(function(player)
    minetest.setting_set("time_speed", "0")
    minetest.set_timeofday(0.5)
    minetest.setting_set("node_highlighting", "box")
+   player:set_inventory_formspec("")
 end)
 minetest.register_on_newplayer(function(player)
 	player:setpos({x=-41, y=12, z=0})
@@ -56,6 +57,7 @@ minetest.register_on_newplayer(function(player)
 end)
 local timer = 0
 minetest.register_globalstep(function(dtime)
+    
     local file2 = io.open(minetest.get_worldpath().."/zw.txt", "r")
 	local zw = file2:read("*l")
     file2:close()
@@ -65,6 +67,11 @@ minetest.register_globalstep(function(dtime)
     local file = io.open(minetest.get_worldpath().."/ver.txt", "r")
 	local ver = file:read("*l")
     file:close()
+    local file = io.open(minetest.get_worldpath().."/timer.txt", "r")
+	local timerf = file:read("*l")
+    file:close()
+    timer = tonumber(timerf)
+
     for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
 		if not object:is_player() then
             local ent = object:get_luaentity()
@@ -2674,6 +2681,9 @@ minetest.register_globalstep(function(dtime)
 	        end
         end
     end
+    fi = io.open(minetest.get_worldpath().."/timer.txt", "w")
+	fi:write(timer)
+	fi:close()
 end)
 
 minetest.register_chatcommand("start", {
@@ -2684,7 +2694,7 @@ minetest.register_chatcommand("start", {
 	    local level = lv:read("*l")
         lv:close()
         fi = io.open(minetest.get_worldpath().."/timer.txt", "w")
-	    fi:write("0")
+	    fi:write("0.1")
 	    fi:close()
         zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
 	    zw:write("0")
@@ -2695,7 +2705,6 @@ minetest.register_chatcommand("start", {
         if tonumber(level) == 33 then
         else
             local player = minetest.get_player_by_name(name)
-            timer = 0.1
             for _,player in ipairs(minetest.get_connected_players()) do
                 player:setpos({x=25, y=10, z=0})
                 for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
