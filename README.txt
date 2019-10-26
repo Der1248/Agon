@@ -10,3 +10,8 @@ After 32 waves you will win the game.
 License:
 See README.txt in each mod for more information
 Every code written by me is LGPLv2.1
+
+Notes:
+bones mod deleted
+creative mod deleted
+sfinv mod deleted

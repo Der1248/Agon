@@ -2071,12 +2071,10 @@ local mob_punch = function(self, hitter, tflp, tool_capabilities, dir)
 		-- do damage
 		self.health = self.health - floor(damage)
         if self.health <= 0 then
-            local file2 = io.open(minetest.get_worldpath().."/kills.txt", "r")
-	        local kills = file2:read("*l")
-            file2:close()
-			fi = io.open(minetest.get_worldpath().."/kills.txt", "w")
-		    fi:write(kills+1)
-		    fi:close()
+			local player_inv = hitter:get_inventory()
+			player_inv:set_size("kills", 1)
+			local kills = player_inv:get_stack("kills", 1):get_count()
+			player_inv:set_stack("kills", 1, "default:dirt "..(kills+1))
         end
 		-- exit here if dead, special item check
 		if weapon:get_name() == "mobs:pick_lava" then

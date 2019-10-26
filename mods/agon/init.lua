@@ -1,3 +1,4 @@
+local hud_levels = {}
 minetest.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	player:hud_add({
@@ -14,9 +15,16 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=30},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Game Version	 :  2.6",
+		text = "Game Version	 :  3.0.0",
 	})
-    
+    hud_levels[name] = player:hud_add({
+		hud_elem_type = "text",
+		position = {x=0, y=0.85},
+		offset = {x=0, y=-450},
+		alignment = {x=1, y=0},
+		number = 0xFFFFFF ,
+		text = "Level: /",
+	})
 end)
 minetest.register_item(":", {
 	type = "none",
@@ -39,6 +47,119 @@ minetest.register_tool(":default:sword_diamond", {
 		damage_groups = {fleshy=8},
 	},
 })
+minetest.register_node("agon:wall",{
+	description = "Wall",
+	tiles = {"agon_wall.png"},
+    groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
+})
+minetest.register_node("agon:spawn",{
+	description = "Mob Spawn",
+	tiles = {"agon_spawn.png"},
+    groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
+})
+minetest.register_node("agon:meselamp", {
+	description = "Mese Lamp",
+	drawtype = "glasslike",
+	tiles = {"agon_meselamp.png"},
+	paramtype = "light",
+	sunlight_propagates = true,
+	is_ground_content = false,
+	groups = {cracky = 3, oddly_breakable_by_hand = 3},
+	light_source = 15,
+})
+function file_check(file_name)
+	local file_found=io.open(file_name, "r")
+	if file_found==nil then
+		file_found=false
+	else
+		file_found=true
+	end
+	return file_found
+end
+function lvbut(from,num,level2)
+    local formspec = ""
+    .."image_button[4.5,-0.3;0.8,0.8;;esc;X]"
+    .."background[5,6.5;1,1;gui_formbg.png;true]"
+    .."listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF]"
+    .."bgcolor[#080808BB;true]"
+    if tonumber(level2) > from and num > 0 then
+        formspec = formspec.."button[0,1;1,1;a;"..(from+1).."]"
+    end
+    if tonumber(level2) > (from+1) and num > 1 then
+        formspec = formspec.."button[1,1;1,1;b;"..(from+2).."]"
+    end
+    if tonumber(level2) > (from+2) and num > 2 then
+        formspec = formspec.."button[2,1;1,1;c;"..(from+3).."]"
+    end
+    if tonumber(level2) > (from+3) and num > 3 then
+        formspec = formspec.."button[3,1;1,1;d;"..(from+4).."]"
+    end
+    if tonumber(level2) > (from+4) and num > 4 then
+        formspec = formspec.."button[4,1;1,1;e;"..(from+5).."]"
+    end
+    if tonumber(level2) > (from+5) and num > 5 then
+        formspec = formspec.."button[0,2;1,1;f;"..(from+6).."]"
+    end
+    if tonumber(level2) > (from+6) and num > 6 then
+        formspec = formspec.."button[1,2;1,1;g;"..(from+7).."]"
+    end
+    if tonumber(level2) > (from+7) and num > 7 then
+        formspec = formspec.."button[2,2;1,1;h;"..(from+8).."]"
+    end
+    if tonumber(level2) > (from+8) and num > 8 then
+        formspec = formspec.."button[3,2;1,1;i;"..(from+9).."]"
+    end
+    if tonumber(level2) > (from+9) and num > 9 then
+        formspec = formspec.."button[4,2;1,1;j;"..(from+10).."]"
+    end
+    if tonumber(level2) > (from+10) and num > 10 then
+        formspec = formspec.."button[0,3;1,1;k;"..(from+11).."]"
+    end
+    if tonumber(level2) > (from+11) and num > 11 then
+        formspec = formspec.."button[1,3;1,1;l;"..(from+12).."]"
+    end
+    if tonumber(level2) > (from+12) and num > 12 then
+        formspec = formspec.."button[2,3;1,1;m;"..(from+13).."]"
+    end
+    if tonumber(level2) > (from+13) and num > 13 then
+        formspec = formspec.."button[3,3;1,1;n;"..(from+14).."]"
+    end
+    if tonumber(level2) > (from+14) and num > 14 then
+        formspec = formspec.."button[4,3;1,1;o;"..(from+15).."]"
+    end
+    if tonumber(level2) > (from+15) and num > 15 then
+        formspec = formspec.."button[0,4;1,1;p;"..(from+16).."]"
+    end
+    if tonumber(level2) > (from+16) and num > 16 then
+        formspec = formspec.."button[1,4;1,1;q;"..(from+17).."]"
+    end
+    if tonumber(level2) > (from+17) and num > 17 then
+        formspec = formspec.."button[2,4;1,1;r;"..(from+18).."]"
+    end
+    if tonumber(level2) > (from+18) and num > 18 then
+        formspec = formspec.."button[3,4;1,1;s;"..(from+19).."]"
+    end
+    if tonumber(level2) > (from+19) and num > 19 then
+        formspec = formspec.."button[4,4;1,1;t;"..(from+20).."]"
+    end
+    if tonumber(level2) > (from+20) and num > 20 then
+        formspec = formspec.."button[0,5;1,1;u;"..(from+21).."]"
+    end
+    if tonumber(level2) > (from+21) and num > 21 then
+        formspec = formspec.."button[1,5;1,1;v;"..(from+22).."]"
+    end
+    if tonumber(level2) > (from+22) and num > 22 then
+        formspec = formspec.."button[2,5;1,1;w;"..(from+23).."]"
+    end
+    if tonumber(level2) > (from+23) and num > 23 then
+        formspec = formspec.."button[3,5;1,1;x;"..(from+24).."]"
+    end
+    if tonumber(level2) > (from+24) and num > 24 then
+        formspec = formspec.."button[4,5;1,1;y;"..(from+25).."]"
+    end
+    return formspec
+end
+
 minetest.register_on_joinplayer(function(player)
    local override_table = player:get_physics_override()
    override_table.new_move = false
@@ -48,2696 +169,531 @@ minetest.register_on_joinplayer(function(player)
    minetest.set_timeofday(0.5)
    minetest.setting_set("node_highlighting", "box")
    player:set_inventory_formspec("")
+   if file_check(minetest.get_worldpath().."/level.txt") == true then
+	else
+		file = io.open(minetest.get_worldpath().."/level.txt", "w")
+		file:write("1")
+		file:close()
+	end
 end)
+
 minetest.register_on_newplayer(function(player)
-	player:setpos({x=-41, y=12, z=0})
+	player:setpos({x=7, y=10, z=0})
     local player_inv = player:get_inventory()
-    player_inv:set_size("armor", 6)
     player_inv:add_item("main","default:sword_diamond")
 end)
-local timer = 0
-minetest.register_globalstep(function(dtime)
-    
-    local file2 = io.open(minetest.get_worldpath().."/zw.txt", "r")
-	local zw = file2:read("*l")
-    file2:close()
-    lv = io.open(minetest.get_worldpath().."/level.txt", "r")
-	local level = lv:read("*l")
-    lv:close()
-    local file = io.open(minetest.get_worldpath().."/ver.txt", "r")
-	local ver = file:read("*l")
-    file:close()
-    local file = io.open(minetest.get_worldpath().."/timer.txt", "r")
-	local timerf = file:read("*l")
-    file:close()
-    timer = tonumber(timerf)
 
-    for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		if not object:is_player() then
-            local ent = object:get_luaentity()
-			if tonumber(ent.npc_name) ~= tonumber(ver) then
-                object:remove()
+local w11 = {}
+w11.get_formspec = function(player, pos)
+	if player == nil then
+        return
+    end
+	local player_inv = player:get_inventory()
+    lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+	local level2 = lv:read("*l")
+    lv:close()
+	formspec = "size[5,6.5]"
+        .."label[0,0;World Level:     "..(tonumber(level2)-1).."/32]"
+        formspec = formspec..lvbut(0,25,level2)
+        if tonumber(level2) > 25 then
+            formspec = formspec.."button[2.5,6;1,1;wab;>]"
+        end
+	return formspec		
+end
+local w12 = {}
+w12.get_formspec = function(player, pos)
+	if player == nil then
+        return
+    end
+	local player_inv = player:get_inventory()
+    lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+	local level2 = lv:read("*l")
+    lv:close()
+	formspec = "size[5,6.5]"
+        .."label[0,0;World Level:     "..(tonumber(level2)-1).."/32]"
+		formspec = formspec.."button[1.5,6;1,1;waa;<]"
+        formspec = formspec..lvbut(25,7,level2)
+        if tonumber(level2) > 32 then
+            formspec = formspec.."label[0,3;you completed Agon]"
+        end
+	return formspec		
+end
+minetest.register_node("agon:new_w1",{
+	tiles  = {"default_silver_sandstone_block.png","default_silver_sandstone_block.png","default_silver_sandstone_block.png","default_silver_sandstone_block.png^agon_new_w1.png","default_silver_sandstone_block.png","default_silver_sandstone_block.png"},
+	description = "New",
+    --groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=3},
+    on_punch = function(pos, node, player, pointed_thing)
+        local player_inv = player:get_inventory()
+		player_inv:set_size("page1", 1)
+        local page = player_inv:get_stack("page1", 1):get_count()+1
+        if page == 1 then
+            minetest.show_formspec(player:get_player_name(), "w11" , w11.get_formspec(player))
+		elseif page == 2 then
+            minetest.show_formspec(player:get_player_name(), "w12" , w12.get_formspec(player))
+        end
+    end,
+})
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+    local player_inv = player:get_inventory()
+    player_inv:set_size("ll", 1)
+    player_inv:set_size("l", 6)
+    player_inv:set_size("page1", 1)
+	if formname == "w11" or formname == "w12" then
+        for k, v in pairs(fields) do
+            if tonumber(v) ~= nil then
+                New(player,"1_"..v)
+                player_inv:set_stack("l",  1, "default:dirt "..v)
+                player_inv:set_stack("ll", 1, "default:dirt 1")
             end
+        end
+	end
+	if fields.waa then
+        player_inv:set_stack("page1",  1, nil)
+        minetest.show_formspec(player:get_player_name(), "w11" , w11.get_formspec(player))
+    elseif fields.wab then
+        player_inv:set_stack("page1",  1, "default:dirt")
+        minetest.show_formspec(player:get_player_name(), "w12" , w12.get_formspec(player))
+    else
+        minetest.show_formspec(player:get_player_name(), "", "")
+	end
+end)
+local new_level = {}
+local total_monster = 0
+local timer = 1000
+minetest.register_on_joinplayer(function(player)
+	local meta = player:get_meta()
+	timer = meta:get_int("timer")
+	local player_inv = player:get_inventory()
+	total_monster = player_inv:get_stack("total_monster", 1):get_count()
+	local ll = player_inv:get_stack("ll", 1):get_count()
+    local l = player_inv:get_stack("l", ll):get_count()
+	if ll > 0 and l > 0 then
+		local lv = io.open(minetest.get_modpath("agon").."/lv"..ll.."_"..l..".txt", "r")
+		new_level = {}
+		for line in lv:lines() do
+			t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+			table.insert(new_level, line);
 		end
 	end
-    if tonumber(timer) > 0 then
-	    timer = timer + dtime
-        local pos1 = {x=16, y=10, z=0}
-        local pos2 = {x=25, y=10, z=9}
-        local pos3 = {x=34, y=10, z=0}
-        local pos4 = {x=25, y=10, z=-9}
-        ki = io.open(minetest.get_worldpath().."/kills.txt", "r")
-	    local kills = ki:read("*l")
-        ki:close()
-        if tonumber(level) == 1 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 5 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 2 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 5 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("6")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 6 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 3 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 5 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 4 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 5 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("6")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 6 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 5 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 5 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("6")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 6 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("7")
-		        zw:close()
-            elseif tonumber(timer) >= 35 and tonumber(zw) == 7 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("8")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 8 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("9")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 9 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("10")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 10 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("11")
-		        zw:close()
-            elseif tonumber(timer) >= 55 and tonumber(zw) == 11 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 6 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 7 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("6")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 6 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 8 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 9 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 10 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 11 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 12 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 13 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 14 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 15 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 15 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 45 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 16 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 17 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 80 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 18 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 80 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 19 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 80 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 20 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 40 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 80 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 21 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 22 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 23 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 24 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 25 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 25 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 75 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 26 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 90 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 120 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 27 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 90 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 120 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 150 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 28 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 90 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 120 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 29 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 90 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 120 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 30 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 1 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 60 and tonumber(zw) == 2 then
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 90 and tonumber(zw) == 3 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 120 and tonumber(zw) == 4 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 150 and tonumber(zw) == 5 then
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 31 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv1")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("1")
-		        zw:close()
-            elseif tonumber(timer) >= 10 and tonumber(zw) == 1 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv2")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("2")
-		        zw:close()
-            elseif tonumber(timer) >= 20 and tonumber(zw) == 2 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv3")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("3")
-		        zw:close()
-            elseif tonumber(timer) >= 30 and tonumber(zw) == 3 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv4")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("4")
-		        zw:close()
-            elseif tonumber(timer) >= 50 and tonumber(zw) == 4 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv5")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("5")
-		        zw:close()
-            elseif tonumber(timer) >= 70 and tonumber(zw) == 5 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv6")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("6")
-		        zw:close()
-            elseif tonumber(timer) >= 100 and tonumber(zw) == 6 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv7")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("7")
-		        zw:close()
-            elseif tonumber(timer) >= 130 and tonumber(zw) == 7 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv8")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("8")
-		        zw:close()
-            elseif tonumber(timer) >= 160 and tonumber(zw) == 8 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv9")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("9")
-		        zw:close()
-            elseif tonumber(timer) >= 200 and tonumber(zw) == 9 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv10")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("10")
-		        zw:close()
-            elseif tonumber(timer) >= 240 and tonumber(zw) == 10 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv11")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("11")
-		        zw:close()
-            elseif tonumber(timer) >= 290 and tonumber(zw) == 11 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv12")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("12")
-		        zw:close()
-            elseif tonumber(timer) >= 340 and tonumber(zw) == 12 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv13")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("13")
-		        zw:close()
-            elseif tonumber(timer) >= 390 and tonumber(zw) == 13 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv14")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("14")
-		        zw:close()
-            elseif tonumber(timer) >= 450 and tonumber(zw) == 14 then
-                for _,player in ipairs(minetest.get_connected_players()) do
-                    player:set_hp(player:get_hp()+8)
-                end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos2,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos4,"mobs:monster_lv15")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-        if tonumber(level) == 32 then
-            if tonumber(kills) > 0 and tonumber(zw) == 0 then
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-            end
-	        if tonumber(zw) == 0 then
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-                local obj = minetest.env:add_entity(pos1,"mobs:monster_lv16")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                local obj = minetest.env:add_entity(pos3,"mobs:monster_lv16")
-                local ent = obj:get_luaentity()
-                ent.npc_name = ver
-                zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		        zw:write("0")
-		        zw:close()
-                timer = 0
-	        end
-        end
-    end
-    local k = 0
-    if tonumber(level) == 1 then
-        k = 10
-    elseif tonumber(level) == 2 then
-        k = 14
-    elseif tonumber(level) == 3 then
-        k = 10
-    elseif tonumber(level) == 4 then
-        k = 14
-    elseif tonumber(level) == 5 then
-        k = 24
-    elseif tonumber(level) == 6 then
-        k = 10
-    elseif tonumber(level) == 7 then
-        k = 14
-    elseif tonumber(level) == 8 then
-        k = 10
-    elseif tonumber(level) == 9 then
-        k = 10
-    elseif tonumber(level) == 10 then
-        k = 10
-    elseif tonumber(level) == 11 then
-        k = 10
-    elseif tonumber(level) == 12 then
-        k = 8
-    elseif tonumber(level) == 13 then
-        k = 12
-    elseif tonumber(level) == 14 then
-        k = 10
-    elseif tonumber(level) == 15 then
-        k = 12
-    elseif tonumber(level) == 16 then
-        k = 8
-    elseif tonumber(level) == 17 then
-        k = 10
-    elseif tonumber(level) == 18 then
-        k = 10
-    elseif tonumber(level) == 19 then
-        k = 12
-    elseif tonumber(level) == 20 then
-        k = 12
-    elseif tonumber(level) == 21 then
-        k = 8
-    elseif tonumber(level) == 22 then
-        k = 10
-    elseif tonumber(level) == 23 then
-        k = 8
-    elseif tonumber(level) == 24 then
-        k = 10
-    elseif tonumber(level) == 25 then
-        k = 10
-    elseif tonumber(level) == 26 then
-        k = 10
-    elseif tonumber(level) == 27 then
-        k = 12
-    elseif tonumber(level) == 28 then
-        k = 10
-    elseif tonumber(level) == 29 then
-        k = 10
-    elseif tonumber(level) == 30 then
-        k = 12
-    elseif tonumber(level) == 31 then
-        k = 60
-    elseif tonumber(level) == 32 then
-        k = 2
-    elseif tonumber(level) == 33 then
-        k = 1
-    end
-    ki = io.open(minetest.get_worldpath().."/kills.txt", "r")
-	local kills = ki:read("*l")
-    ki:close()
-    if tonumber(kills) == k then
-        timer = 0
-        zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-		zw:write("0")
-		zw:close()
-        ki = io.open(minetest.get_worldpath().."/kills.txt", "w")
-		ki:write("0")
-		ki:close()
-        le = io.open(minetest.get_worldpath().."/level.txt", "w")
-		le:write(level+1)
-		le:close()
-        local file = io.open(minetest.get_worldpath().."/ver.txt", "r")
-	    local ver = file:read("*l")
-        file:close()
-        ver2 = io.open(minetest.get_worldpath().."/ver.txt", "w")
-	    ver2:write(ver+1)
-	    ver2:close()
-        timer = 0
-        for _,player in ipairs(minetest.get_connected_players()) do
-            if tonumber(level) < 32 then
-                player:setpos({x=-35, y=10, z=0})
-            else
-                player:setpos({x=54, y=10, z=0})
-            end
-            player:set_hp(20)
-            for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		        if not object:is_player() then
-			        if object:get_entity_name() then
-				        object:remove()
-			        end
-		        end
-	        end
-        end
-    end
-    fi = io.open(minetest.get_worldpath().."/timer.txt", "w")
-	fi:write(timer)
-	fi:close()
 end)
-
-minetest.register_chatcommand("start", {
-	params = "",
-	description = "Starts the game",
-	func = function(name, param)
-        lv = io.open(minetest.get_worldpath().."/level.txt", "r")
-	    local level = lv:read("*l")
-        lv:close()
-        fi = io.open(minetest.get_worldpath().."/timer.txt", "w")
-	    fi:write("0.1")
-	    fi:close()
-        zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-	    zw:write("0")
-	    zw:close()
-        ki = io.open(minetest.get_worldpath().."/kills.txt", "w")
-	    ki:write("0")
-	    ki:close()
-        if tonumber(level) == 33 then
+function New(player,page)
+    local player_inv = player:get_inventory()
+	for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
+		if not object:is_player() then
+			if object:get_entity_name() then
+				object:remove()
+			end
+		end
+	end
+	player:setpos({x=25, y=10, z=0})
+	player:set_hp(20)
+	local lv = io.open(minetest.get_modpath("agon").."/lv"..page..".txt", "r")
+	new_level = {}
+	total_monster = 0
+	for line in lv:lines() do
+		t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+		table.insert (new_level, line);
+		if tonumber(m1) > 0 then
+			total_monster = total_monster+1
+		end
+		if tonumber(m2) > 0 then
+			total_monster = total_monster+1
+		end
+		if tonumber(m3) > 0 then
+			total_monster = total_monster+1
+		end
+		if tonumber(m4) > 0 then
+			total_monster = total_monster+1
+		end
+	end
+	timer = 0
+	local meta = player:get_meta()
+	meta:set_int("timer", 0)
+	player_inv:set_size("zw", 1)
+	player_inv:set_stack("zw", 1, "default:dirt")
+	player_inv:set_size("total_monster", 1)
+	player_inv:set_stack("total_monster", 1, "default:dirt "..total_monster)
+	player_inv:set_size("kills", 1)
+	player_inv:set_stack("kills", 1, nil)
+end
+local pos1 = {x=16, y=10, z=0}
+local pos2 = {x=25, y=10, z=9}
+local pos3 = {x=34, y=10, z=0}
+local pos4 = {x=25, y=10, z=-9}
+local pos5 = {x=16, y=11, z=0}
+local pos6 = {x=34, y=11, z=0}
+local timer2 = 0
+local set = 0
+minetest.register_globalstep(function(dtime)
+	timer = timer + dtime
+	timer2 = timer2 + dtime
+    local players = minetest.get_connected_players()
+    for _,player in ipairs(players) do
+        local player_inv = player:get_inventory()
+		player_inv:set_size("load", 1)
+		if minetest.get_node({x=25, y=9, z=0}).name == "agon:wall" and minetest.get_node({x=39, y=9, z=0}).name == "agon:wall" and player_inv:get_stack("load", 1):get_count() < 1 and set == 0 then
+			minetest.chat_send_all("The world is loading... This can take a few seconds")
+			player:setpos({x=7, y=10, z=0})
+			for i = 4, 39 do
+				for m = 9,18 do
+					for j = 0, 14 do
+						minetest.set_node({x=i, y=m, z=j}, {name="air"})
+						minetest.set_node({x=i, y=m, z=(-1)*j}, {name="air"})
+					end
+				end
+			end
+			set = 1
+		end
+		if minetest.get_node({x=25, y=9, z=0}).name == "agon:wall" and minetest.get_node({x=39, y=9, z=0}).name == "agon:wall" and player_inv:get_stack("load", 1):get_count() < 1 and set == 1 then
+			player:setpos({x=7, y=10, z=0})
+			for i = 4, 39 do
+				for m = 19,150 do
+					for j = 0, 14 do
+						minetest.set_node({x=i, y=m, z=j}, {name="air"})
+						minetest.set_node({x=i, y=m, z=(-1)*j}, {name="air"})
+					end
+				end
+			end
+			minetest.chat_send_all("The world should be loaded, if not start a new world!")
+			player:setpos({x=7, y=10, z=0})
+			player_inv:set_stack("load", 1, "default:dirt")
+		end
+		
+        player_inv:set_size("ll", 1)
+        player_inv:set_size("l", 4)
+		player_inv:set_size("zw", 1)
+        local ll = player_inv:get_stack("ll", 1):get_count()
+        local l = player_inv:get_stack("l", ll):get_count()
+        if ll == 0 then
         else
-            local player = minetest.get_player_by_name(name)
-            for _,player in ipairs(minetest.get_connected_players()) do
-                player:setpos({x=25, y=10, z=0})
-                for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
-		            if not object:is_player() then
-			            if object:get_entity_name() then
-				            object:remove()
-			            end
-		            end
-	            end
-            end
+            player:hud_change(hud_levels[player:get_player_name()], 'text', "Level: World "..ll.."."..l)
         end
-	end,
-})
+		local zw = player_inv:get_stack("zw", 1):get_count()
+		if zw > 0 then
+			if new_level[zw] then
+				t, m1, m2, m3, m4 = new_level[zw]:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+				if timer > tonumber(t) then
+					if l == 31 then
+						player:set_hp(player:get_hp()+8)
+					end
+					player_inv:set_stack("zw", 1, "default:dirt "..zw+1)
+					if tonumber(m1) > 0 and l ~= 32 then
+						local obj = minetest.env:add_entity(pos1,"mobs:monster_lv"..m1)
+					end
+					if tonumber(m2) > 0 then
+						local obj = minetest.env:add_entity(pos2,"mobs:monster_lv"..m2)
+					end
+					if tonumber(m3) > 0 and l ~= 32 then
+						local obj = minetest.env:add_entity(pos3,"mobs:monster_lv"..m3)
+					end
+					if tonumber(m4) > 0 then
+						local obj = minetest.env:add_entity(pos4,"mobs:monster_lv"..m4)
+					end
+					
+					if tonumber(m1) > 0 and l == 32 then
+						local obj = minetest.env:add_entity(pos5,"mobs:monster_lv"..m1)
+					end
+					if tonumber(m3) > 0 and l == 32 then
+						local obj = minetest.env:add_entity(pos6,"mobs:monster_lv"..m3)
+					end
+				end
+			end
+			local kills = player_inv:get_stack("kills", 1):get_count()
+			if kills >= total_monster then
+				minetest.chat_send_all("level completed")
+				player:set_hp(20)
+				lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+				local level = lv:read("*l")
+				lv:close()
+				if tonumber(l) == tonumber(level) then
+					le = io.open(minetest.get_worldpath().."/level.txt", "w")
+					le:write(level+1)
+					le:close()
+				end
+				timer = 1000
+				zw = 0
+				total_monster = 0
+				player_inv:set_stack("kills", 1, nil)
+				player_inv:set_size("zw", 1)
+				player_inv:set_stack("zw", 1, "default:dirt "..zw)
+				player_inv:set_size("total_monster", 1)
+				player_inv:set_stack("total_monster", 1, "default:dirt "..total_monster)
+				player:setpos({x=7, y=10, z=0})
+			end
+		end
+		local meta = player:get_meta()
+		meta:set_int("timer", timer)
+    end
+	if timer2 >= 1 then
+		timer2 = 0
+		for i = 4, 39 do
+			for j = 0, 14 do
+				minetest.set_node({x=i, y=9, z=j}, {name="agon:wall"})
+				minetest.set_node({x=i, y=9, z=(-1)*j}, {name="agon:wall"})
+			end
+		end
+		for m = 10,12 do
+			for j = 0, 4 do
+				minetest.set_node({x=4, y=m, z=j}, {name="agon:wall"})
+				minetest.set_node({x=4, y=m, z=(-1)*j}, {name="agon:wall"})
+				minetest.set_node({x=10, y=m, z=j}, {name="agon:wall"})
+				minetest.set_node({x=10, y=m, z=(-1)*j}, {name="agon:wall"})
+				minetest.set_node({x=11, y=m, z=j}, {name="agon:wall"})
+				minetest.set_node({x=11, y=m, z=(-1)*j}, {name="agon:wall"})
+				minetest.set_node({x=39, y=m, z=j}, {name="agon:wall"})
+				minetest.set_node({x=39, y=m, z=(-1)*j}, {name="agon:wall"})
+			end
+			for i = 5, 9 do
+				minetest.set_node({x=i, y=m, z=4}, {name="agon:wall"})
+				minetest.set_node({x=i, y=m, z=-4}, {name="agon:wall"})
+			end
+			for i = 21, 29 do
+				minetest.set_node({x=i, y=m, z=14}, {name="agon:wall"})
+				minetest.set_node({x=i, y=m, z=-14}, {name="agon:wall"})
+			end
+			minetest.set_node({x=12, y=m, z=5}, {name="agon:wall"})
+			minetest.set_node({x=13, y=m, z=6}, {name="agon:wall"})
+			minetest.set_node({x=14, y=m, z=7}, {name="agon:wall"})
+			minetest.set_node({x=15, y=m, z=8}, {name="agon:wall"})
+			minetest.set_node({x=16, y=m, z=9}, {name="agon:wall"})
+			minetest.set_node({x=17, y=m, z=10}, {name="agon:wall"})
+			minetest.set_node({x=18, y=m, z=11}, {name="agon:wall"})
+			minetest.set_node({x=19, y=m, z=12}, {name="agon:wall"})
+			minetest.set_node({x=20, y=m, z=13}, {name="agon:wall"})
+			minetest.set_node({x=12, y=m, z=-5}, {name="agon:wall"})
+			minetest.set_node({x=13, y=m, z=-6}, {name="agon:wall"})
+			minetest.set_node({x=14, y=m, z=-7}, {name="agon:wall"})
+			minetest.set_node({x=15, y=m, z=-8}, {name="agon:wall"})
+			minetest.set_node({x=16, y=m, z=-9}, {name="agon:wall"})
+			minetest.set_node({x=17, y=m, z=-10}, {name="agon:wall"})
+			minetest.set_node({x=18, y=m, z=-11}, {name="agon:wall"})
+			minetest.set_node({x=19, y=m, z=-12}, {name="agon:wall"})
+			minetest.set_node({x=20, y=m, z=-13}, {name="agon:wall"})
+			minetest.set_node({x=38, y=m, z=5}, {name="agon:wall"})
+			minetest.set_node({x=37, y=m, z=6}, {name="agon:wall"})
+			minetest.set_node({x=36, y=m, z=7}, {name="agon:wall"})
+			minetest.set_node({x=35, y=m, z=8}, {name="agon:wall"})
+			minetest.set_node({x=34, y=m, z=9}, {name="agon:wall"})
+			minetest.set_node({x=33, y=m, z=10}, {name="agon:wall"})
+			minetest.set_node({x=32, y=m, z=11}, {name="agon:wall"})
+			minetest.set_node({x=31, y=m, z=12}, {name="agon:wall"})
+			minetest.set_node({x=30, y=m, z=13}, {name="agon:wall"})
+			minetest.set_node({x=38, y=m, z=-5}, {name="agon:wall"})
+			minetest.set_node({x=37, y=m, z=-6}, {name="agon:wall"})
+			minetest.set_node({x=36, y=m, z=-7}, {name="agon:wall"})
+			minetest.set_node({x=35, y=m, z=-8}, {name="agon:wall"})
+			minetest.set_node({x=34, y=m, z=-9}, {name="agon:wall"})
+			minetest.set_node({x=33, y=m, z=-10}, {name="agon:wall"})
+			minetest.set_node({x=32, y=m, z=-11}, {name="agon:wall"})
+			minetest.set_node({x=31, y=m, z=-12}, {name="agon:wall"})
+			minetest.set_node({x=30, y=m, z=-13}, {name="agon:wall"})
+		end
+		for i = 4, 10 do
+			for j = 0, 4 do
+				minetest.set_node({x=i, y=13, z=j}, {name="agon:meselamp"})
+				minetest.set_node({x=i, y=13, z=(-1)*j}, {name="agon:meselamp"})
+			end
+		end
+		for i = 21, 29 do
+			minetest.set_node({x=i, y=13, z=14}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=13, z=-14}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=14, z=13}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=14, z=-13}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=15, z=12}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=15, z=-12}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=16, z=11}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=16, z=-11}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=17, z=10}, {name="agon:meselamp"})
+			minetest.set_node({x=i, y=17, z=-10}, {name="agon:meselamp"})
+		end
+		for j = 0, 4 do
+			minetest.set_node({x=11, y=13, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=11, y=13, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=39, y=13, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=39, y=13, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=12, y=14, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=12, y=14, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=38, y=14, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=38, y=14, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=13, y=15, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=13, y=15, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=37, y=15, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=37, y=15, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=14, y=16, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=14, y=16, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=36, y=16, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=36, y=16, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=15, y=17, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=15, y=17, z=(-1)*j}, {name="agon:meselamp"})
+			minetest.set_node({x=35, y=17, z=j}, {name="agon:meselamp"})
+			minetest.set_node({x=35, y=17, z=(-1)*j}, {name="agon:meselamp"})
+		end
+		for i = 16, 34 do
+			for j = 0, 9 do
+				minetest.set_node({x=i, y=18, z=j}, {name="agon:meselamp"})
+				minetest.set_node({x=i, y=18, z=(-1)*j}, {name="agon:meselamp"})
+			end
+		end
+		minetest.set_node({x=12, y=13, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=13, y=13, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=13, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=13, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=13, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=13, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=13, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=13, z=12}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=13, z=13}, {name="agon:meselamp"})
+		minetest.set_node({x=12, y=13, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=13, y=13, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=13, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=13, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=13, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=13, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=13, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=13, z=-12}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=13, z=-13}, {name="agon:meselamp"})
+		minetest.set_node({x=38, y=13, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=37, y=13, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=13, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=13, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=13, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=13, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=13, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=13, z=12}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=13, z=13}, {name="agon:meselamp"})
+		minetest.set_node({x=38, y=13, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=37, y=13, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=13, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=13, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=13, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=13, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=13, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=13, z=-12}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=13, z=-13}, {name="agon:meselamp"})
+		minetest.set_node({x=13, y=14, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=14, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=14, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=14, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=14, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=14, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=14, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=14, z=12}, {name="agon:meselamp"})
+		minetest.set_node({x=13, y=14, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=14, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=14, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=14, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=14, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=14, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=14, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=14, z=-12}, {name="agon:meselamp"})
+		minetest.set_node({x=37, y=14, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=14, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=14, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=14, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=14, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=14, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=14, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=14, z=12}, {name="agon:meselamp"})
+		minetest.set_node({x=37, y=14, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=14, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=14, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=14, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=14, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=14, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=14, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=14, z=-12}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=15, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=15, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=15, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=15, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=15, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=15, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=15, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=14, y=15, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=15, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=15, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=15, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=15, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=15, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=15, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=15, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=15, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=15, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=15, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=15, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=15, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=15, z=11}, {name="agon:meselamp"})
+		minetest.set_node({x=36, y=15, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=15, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=15, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=15, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=15, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=15, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=15, z=-11}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=16, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=16, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=16, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=16, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=16, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=16, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=15, y=16, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=16, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=16, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=16, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=16, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=16, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=16, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=16, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=16, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=16, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=16, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=16, z=10}, {name="agon:meselamp"})
+		minetest.set_node({x=35, y=16, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=16, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=16, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=16, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=16, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=16, z=-10}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=17, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=17, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=17, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=17, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=17, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=17, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=17, y=17, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=18, y=17, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=19, y=17, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=20, y=17, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=17, z=5}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=17, z=6}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=17, z=7}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=17, z=8}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=17, z=9}, {name="agon:meselamp"})
+		minetest.set_node({x=34, y=17, z=-5}, {name="agon:meselamp"})
+		minetest.set_node({x=33, y=17, z=-6}, {name="agon:meselamp"})
+		minetest.set_node({x=32, y=17, z=-7}, {name="agon:meselamp"})
+		minetest.set_node({x=31, y=17, z=-8}, {name="agon:meselamp"})
+		minetest.set_node({x=30, y=17, z=-9}, {name="agon:meselamp"})
+		minetest.set_node({x=16, y=9, z=0}, {name="agon:spawn"})
+		minetest.set_node({x=25, y=9, z=9}, {name="agon:spawn"})
+		minetest.set_node({x=34, y=9, z=0}, {name="agon:spawn"})
+		minetest.set_node({x=25, y=9, z=-9}, {name="agon:spawn"})
+		minetest.set_node({x=10, y=11, z=0}, {name="agon:new_w1"})
+	end
+end)
 
 
 
 minetest.register_on_respawnplayer(function(player)
-	fi = io.open(minetest.get_worldpath().."/timer.txt", "w")
-	fi:write("0")
-	fi:close()
-    zw = io.open(minetest.get_worldpath().."/zw.txt", "w")
-	zw:write("0")
-	zw:close()
-    ki = io.open(minetest.get_worldpath().."/kills.txt", "w")
-	ki:write("0")
-	ki:close()
-    local file = io.open(minetest.get_worldpath().."/ver.txt", "r")
-	local ver = file:read("*l")
-    file:close()
-    ver2 = io.open(minetest.get_worldpath().."/ver.txt", "w")
-	ver2:write(ver+1)
-	ver2:close()
-    timer = 0
+	timer = 1000
+	zw = 0
+	total_monster = 0
+	local player_inv = player:get_inventory()
+	player_inv:set_stack("kills", 1, nil)
+	player_inv:set_size("zw", 1)
+	player_inv:set_stack("zw", 1, "default:dirt "..zw)
+	player_inv:set_size("total_monster", 1)
+	player_inv:set_stack("total_monster", 1, "default:dirt "..total_monster)
     for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
 		if not object:is_player() then
 			if object:get_entity_name() then
@@ -2745,7 +701,6 @@ minetest.register_on_respawnplayer(function(player)
 			end
 		end
 	end
-    player:setpos({x=-35, y=10, z=0})
-    player:set_look_yaw(284)
+    player:setpos({x=7, y=10, z=0})
     return true
 end)

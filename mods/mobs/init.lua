@@ -151,7 +151,7 @@ mobs:register_mob("mobs:monster_lv5", {
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_stone_monster.x",
-    blood_texture = "wool_orange.png",
+    blood_texture = "wool_magenta.png",
 	textures = {
 		{"mobs_monster_lv5.png"},
 	},
@@ -501,7 +501,7 @@ mobs:register_mob("mobs:monster_lv15", {
 	collisionbox = {-0.4, -0.01, -0.4, 0.4, 1.9, 0.4},
 	visual = "mesh",
 	mesh = "mobs_stone_monster.x",
-    blood_texture = "wool_purple.png",
+    blood_texture = "wool_violet.png",
 	textures = {
 		{"mobs_monster_lv15.png"},
 	},
