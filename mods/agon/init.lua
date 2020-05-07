@@ -7,7 +7,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=10},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "For Minetest 	  :  5.1.x",
+		text = "For Minetest 	  :  5.2.0",
 	})
 	player:hud_add({
 		hud_elem_type = "text",
@@ -15,7 +15,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=30},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Game Version	 :  3.0.1",
+		text = "Game Version	 :  3.0.2",
 	})
     hud_levels[name] = player:hud_add({
 		hud_elem_type = "text",
@@ -26,6 +26,7 @@ minetest.register_on_joinplayer(function(player)
 		text = "Level: /",
 	})
 end)
+local map_version = 1
 minetest.register_item(":", {
 	type = "none",
 	wield_image = "wieldhand.png",
@@ -161,18 +162,34 @@ function lvbut(from,num,level2)
 end
 
 minetest.register_on_joinplayer(function(player)
-   local override_table = player:get_physics_override()
-   override_table.new_move = false
-   override_table.sneak_glitch = true
-   player:set_physics_override(override_table)
-   minetest.setting_set("time_speed", "0")
-   minetest.set_timeofday(0.5)
-   minetest.setting_set("node_highlighting", "box")
-   player:set_inventory_formspec("")
-   if file_check(minetest.get_worldpath().."/level.txt") == true then
+	local override_table = player:get_physics_override()
+	override_table.new_move = false
+	override_table.sneak_glitch = true
+	player:set_physics_override(override_table)
+	minetest.setting_set("time_speed", "0")
+	minetest.set_timeofday(0.5)
+	minetest.setting_set("node_highlighting", "box")
+	player:set_inventory_formspec("")
+	if file_check(minetest.get_worldpath().."/level.txt") == true then
 	else
 		file = io.open(minetest.get_worldpath().."/level.txt", "w")
 		file:write("1")
+		file:close()
+	end
+	if file_check(minetest.get_worldpath().."/Map_Version.txt") == true then
+	else
+		minetest.place_schematic({ x = 4, y = 9, z = -14 }, minetest.get_modpath("agon").."/schematics/sector1.mts","0")
+		file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
+		file:write(map_version)
+		file:close()
+	end
+	file = io.open(minetest.get_worldpath().."/Map_Version.txt", "r")
+	local map_ver = file:read("*l")
+    file:close()
+	if tonumber(map_ver) < map_version then
+		minetest.place_schematic({ x = 4, y = 9, z = -14 }, minetest.get_modpath("agon").."/schematics/sector1.mts","0")
+		file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
+		file:write(map_version)
 		file:close()
 	end
 end)
@@ -330,35 +347,6 @@ minetest.register_globalstep(function(dtime)
     local players = minetest.get_connected_players()
     for _,player in ipairs(players) do
         local player_inv = player:get_inventory()
-		player_inv:set_size("load", 1)
-		if minetest.get_node({x=25, y=9, z=0}).name == "agon:wall" and minetest.get_node({x=39, y=9, z=0}).name == "agon:wall" and player_inv:get_stack("load", 1):get_count() < 1 and set == 0 then
-			minetest.chat_send_all("The world is loading... This can take a few seconds")
-			player:setpos({x=7, y=10, z=0})
-			for i = 4, 39 do
-				for m = 9,18 do
-					for j = 0, 14 do
-						minetest.set_node({x=i, y=m, z=j}, {name="air"})
-						minetest.set_node({x=i, y=m, z=(-1)*j}, {name="air"})
-					end
-				end
-			end
-			set = 1
-		end
-		if minetest.get_node({x=25, y=9, z=0}).name == "agon:wall" and minetest.get_node({x=39, y=9, z=0}).name == "agon:wall" and player_inv:get_stack("load", 1):get_count() < 1 and set == 1 then
-			player:setpos({x=7, y=10, z=0})
-			for i = 4, 39 do
-				for m = 19,150 do
-					for j = 0, 14 do
-						minetest.set_node({x=i, y=m, z=j}, {name="air"})
-						minetest.set_node({x=i, y=m, z=(-1)*j}, {name="air"})
-					end
-				end
-			end
-			minetest.chat_send_all("The world should be loaded, if not start a new world!")
-			player:setpos({x=7, y=10, z=0})
-			player_inv:set_stack("load", 1, "default:dirt")
-		end
-		
         player_inv:set_size("ll", 1)
         player_inv:set_size("l", 4)
 		player_inv:set_size("zw", 1)
