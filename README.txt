@@ -15,3 +15,4 @@ Notes:
 bones mod deleted
 creative mod deleted
 sfinv mod deleted
+mtg_craftguide mod deleted
