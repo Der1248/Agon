@@ -7,7 +7,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=10},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "For Minetest 	  :  5.4.x",
+		text = "For Minetest 	  :  5.5.x",
 	})
 	player:hud_add({
 		hud_elem_type = "text",
@@ -15,7 +15,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=30},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Game Version	 :  3.0.5",
+		text = "Game Version	 :  3.0.6",
 	})
     hud_levels[name] = player:hud_add({
 		hud_elem_type = "text",
@@ -26,6 +26,29 @@ minetest.register_on_joinplayer(function(player)
 		text = "Level: /",
 	})
 end)
+
+minetest.register_alias("mapgen_stone", "air")
+minetest.register_alias("mapgen_water_source", "air")
+
+minetest.register_on_joinplayer(function(player)
+	-- Set formspec prepend
+	local formspec = [[
+			bgcolor[#080808BB;true]
+			listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF] ]]
+	local name = player:get_player_name()
+	local info = minetest.get_player_information(name)
+	if info.formspec_version > 1 then
+		formspec = formspec .. "background9[5,5;1,1;gui_formbg.png;true;10]"
+	else
+		formspec = formspec .. "background[5,5;1,1;gui_formbg.png;true]"
+	end
+	player:set_formspec_prepend(formspec)
+
+	-- Set hotbar textures
+	player:hud_set_hotbar_image("gui_hotbar.png")
+	player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
+end)
+
 local map_version = 1
 minetest.register_item(":", {
 	type = "none",
@@ -37,7 +60,7 @@ minetest.register_item(":", {
 		damage_groups = {fleshy = 10},
 	}
 })
-minetest.register_tool(":default:sword_diamond", {
+minetest.register_tool("agon:sword_diamond", {
 	description = "Diamond Sword",
 	inventory_image = "default_tool_diamondsword.png",
 	tool_capabilities = {
@@ -196,8 +219,6 @@ end)
 
 minetest.register_on_newplayer(function(player)
 	player:setpos({x=7, y=10, z=0})
-    local player_inv = player:get_inventory()
-    player_inv:add_item("main","default:sword_diamond")
 end)
 
 local w11 = {}
@@ -278,9 +299,10 @@ local new_level = {}
 local total_monster = 0
 local timer = 1000
 minetest.register_on_joinplayer(function(player)
+	local player_inv = player:get_inventory()
+    player_inv:set_stack("main", 1, "agon:sword_diamond")
 	local meta = player:get_meta()
 	timer = meta:get_int("timer")
-	local player_inv = player:get_inventory()
 	total_monster = player_inv:get_stack("total_monster", 1):get_count()
 	local ll = player_inv:get_stack("ll", 1):get_count()
     local l = player_inv:get_stack("l", ll):get_count()
