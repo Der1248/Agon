@@ -7,7 +7,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=10},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "For Minetest 	  :  5.6.x",
+		text = "For Minetest 	  :  5.7.0",
 	})
 	player:hud_add({
 		hud_elem_type = "text",
@@ -15,7 +15,7 @@ minetest.register_on_joinplayer(function(player)
 		offset = {x=0, y=30},
 		alignment = {x=1, y=0},
 		number = 0xFFFFFF ,
-		text = "Game Version	 :  3.0.7",
+		text = "Game Version	 :  3.0.8",
 	})
     hud_levels[name] = player:hud_add({
 		hud_elem_type = "text",
@@ -27,8 +27,10 @@ minetest.register_on_joinplayer(function(player)
 	})
 end)
 
+dofile(minetest.get_modpath("agon").."/monsters.lua")
 minetest.register_alias("mapgen_stone", "air")
 minetest.register_alias("mapgen_water_source", "air")
+minetest.register_alias("mapgen_river_water_source", "air")
 
 minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
@@ -89,7 +91,7 @@ minetest.register_node("agon:meselamp", {
 	sunlight_propagates = true,
 	is_ground_content = false,
 	groups = {cracky = 3, oddly_breakable_by_hand = 3},
-	light_source = 15,
+	light_source = 14,
 })
 function file_check(file_name)
 	local file_found=io.open(file_name, "r")
@@ -189,36 +191,34 @@ minetest.register_on_joinplayer(function(player)
 	override_table.new_move = false
 	override_table.sneak_glitch = true
 	player:set_physics_override(override_table)
-	minetest.setting_set("time_speed", "0")
-	minetest.set_timeofday(0.5)
-	minetest.setting_set("node_highlighting", "box")
 	player:set_inventory_formspec("")
 	if file_check(minetest.get_worldpath().."/level.txt") == true then
 	else
-		file = io.open(minetest.get_worldpath().."/level.txt", "w")
+		local file = io.open(minetest.get_worldpath().."/level.txt", "w")
 		file:write("1")
 		file:close()
 	end
 	if file_check(minetest.get_worldpath().."/Map_Version.txt") == true then
 	else
 		minetest.place_schematic({ x = 4, y = 9, z = -14 }, minetest.get_modpath("agon").."/schematics/sector1.mts","0")
-		file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
+		local file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
 		file:write(map_version)
 		file:close()
 	end
-	file = io.open(minetest.get_worldpath().."/Map_Version.txt", "r")
+	local file = io.open(minetest.get_worldpath().."/Map_Version.txt", "r")
 	local map_ver = file:read("*l")
     file:close()
 	if tonumber(map_ver) < map_version then
 		minetest.place_schematic({ x = 4, y = 9, z = -14 }, minetest.get_modpath("agon").."/schematics/sector1.mts","0")
-		file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
+		local file = io.open(minetest.get_worldpath().."/Map_Version.txt", "w")
 		file:write(map_version)
 		file:close()
 	end
 end)
 
 minetest.register_on_newplayer(function(player)
-	player:setpos({x=7, y=10, z=0})
+	player:set_pos({x=7, y=10, z=0})
+	player:set_look_horizontal(3 * math.pi / 2)
 end)
 
 local w11 = {}
@@ -227,10 +227,10 @@ w11.get_formspec = function(player, pos)
         return
     end
 	local player_inv = player:get_inventory()
-    lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+    local lv = io.open(minetest.get_worldpath().."/level.txt", "r")
 	local level2 = lv:read("*l")
     lv:close()
-	formspec = "size[5,6.5]"
+	local formspec = "size[5,6.5]"
         .."label[0,0;World Level:     "..(tonumber(level2)-1).."/32]"
         formspec = formspec..lvbut(0,25,level2)
         if tonumber(level2) > 25 then
@@ -244,10 +244,10 @@ w12.get_formspec = function(player, pos)
         return
     end
 	local player_inv = player:get_inventory()
-    lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+    local lv = io.open(minetest.get_worldpath().."/level.txt", "r")
 	local level2 = lv:read("*l")
     lv:close()
-	formspec = "size[5,6.5]"
+	local formspec = "size[5,6.5]"
         .."label[0,0;World Level:     "..(tonumber(level2)-1).."/32]"
 		formspec = formspec.."button[1.5,6;1,1;waa;<]"
         formspec = formspec..lvbut(25,7,level2)
@@ -310,27 +310,27 @@ minetest.register_on_joinplayer(function(player)
 		local lv = io.open(minetest.get_modpath("agon").."/lv"..ll.."_"..l..".txt", "r")
 		new_level = {}
 		for line in lv:lines() do
-			t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+			local t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
 			table.insert(new_level, line);
 		end
 	end
 end)
 function New(player,page)
     local player_inv = player:get_inventory()
-	for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
+	for _,object in ipairs(minetest.get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
 		if not object:is_player() then
-			if object:get_entity_name() then
+			if object:get_luaentity() then
 				object:remove()
 			end
 		end
 	end
-	player:setpos({x=25, y=10, z=0})
+	player:set_pos({x=25, y=10, z=0})
 	player:set_hp(20)
 	local lv = io.open(minetest.get_modpath("agon").."/lv"..page..".txt", "r")
 	new_level = {}
 	total_monster = 0
 	for line in lv:lines() do
-		t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+		local t, m1, m2, m3, m4 = line:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
 		table.insert (new_level, line);
 		if tonumber(m1) > 0 then
 			total_monster = total_monster+1
@@ -381,30 +381,30 @@ minetest.register_globalstep(function(dtime)
 		local zw = player_inv:get_stack("zw", 1):get_count()
 		if zw > 0 then
 			if new_level[zw] then
-				t, m1, m2, m3, m4 = new_level[zw]:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+				local t, m1, m2, m3, m4 = new_level[zw]:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
 				if timer > tonumber(t) then
 					if l == 31 then
 						player:set_hp(player:get_hp()+8)
 					end
 					player_inv:set_stack("zw", 1, "default:dirt "..zw+1)
 					if tonumber(m1) > 0 and l ~= 32 then
-						local obj = minetest.env:add_entity(pos1,"mobs:monster_lv"..m1)
+						local obj = minetest.add_entity(pos1,"mobs:monster_lv"..m1)
 					end
 					if tonumber(m2) > 0 then
-						local obj = minetest.env:add_entity(pos2,"mobs:monster_lv"..m2)
+						local obj = minetest.add_entity(pos2,"mobs:monster_lv"..m2)
 					end
 					if tonumber(m3) > 0 and l ~= 32 then
-						local obj = minetest.env:add_entity(pos3,"mobs:monster_lv"..m3)
+						local obj = minetest.add_entity(pos3,"mobs:monster_lv"..m3)
 					end
 					if tonumber(m4) > 0 then
-						local obj = minetest.env:add_entity(pos4,"mobs:monster_lv"..m4)
+						local obj = minetest.add_entity(pos4,"mobs:monster_lv"..m4)
 					end
 					
 					if tonumber(m1) > 0 and l == 32 then
-						local obj = minetest.env:add_entity(pos5,"mobs:monster_lv"..m1)
+						local obj = minetest.add_entity(pos5,"mobs:monster_lv"..m1)
 					end
 					if tonumber(m3) > 0 and l == 32 then
-						local obj = minetest.env:add_entity(pos6,"mobs:monster_lv"..m3)
+						local obj = minetest.add_entity(pos6,"mobs:monster_lv"..m3)
 					end
 				end
 			end
@@ -412,11 +412,11 @@ minetest.register_globalstep(function(dtime)
 			if kills >= total_monster then
 				minetest.chat_send_all("level completed")
 				player:set_hp(20)
-				lv = io.open(minetest.get_worldpath().."/level.txt", "r")
+				local lv = io.open(minetest.get_worldpath().."/level.txt", "r")
 				local level = lv:read("*l")
 				lv:close()
 				if tonumber(l) == tonumber(level) then
-					le = io.open(minetest.get_worldpath().."/level.txt", "w")
+					local le = io.open(minetest.get_worldpath().."/level.txt", "w")
 					le:write(level+1)
 					le:close()
 				end
@@ -428,267 +428,16 @@ minetest.register_globalstep(function(dtime)
 				player_inv:set_stack("zw", 1, "default:dirt "..zw)
 				player_inv:set_size("total_monster", 1)
 				player_inv:set_stack("total_monster", 1, "default:dirt "..total_monster)
-				player:setpos({x=7, y=10, z=0})
+				player:set_pos({x=7, y=10, z=0})
+				player:set_look_horizontal(3 * math.pi / 2)
 			end
 		end
 		local meta = player:get_meta()
 		meta:set_int("timer", timer)
     end
 	if timer2 >= 1 then
+		minetest.set_timeofday(0.5)
 		timer2 = 0
-		for i = 4, 39 do
-			for j = 0, 14 do
-				minetest.set_node({x=i, y=9, z=j}, {name="agon:wall"})
-				minetest.set_node({x=i, y=9, z=(-1)*j}, {name="agon:wall"})
-			end
-		end
-		for m = 10,12 do
-			for j = 0, 4 do
-				minetest.set_node({x=4, y=m, z=j}, {name="agon:wall"})
-				minetest.set_node({x=4, y=m, z=(-1)*j}, {name="agon:wall"})
-				minetest.set_node({x=10, y=m, z=j}, {name="agon:wall"})
-				minetest.set_node({x=10, y=m, z=(-1)*j}, {name="agon:wall"})
-				minetest.set_node({x=11, y=m, z=j}, {name="agon:wall"})
-				minetest.set_node({x=11, y=m, z=(-1)*j}, {name="agon:wall"})
-				minetest.set_node({x=39, y=m, z=j}, {name="agon:wall"})
-				minetest.set_node({x=39, y=m, z=(-1)*j}, {name="agon:wall"})
-			end
-			for i = 5, 9 do
-				minetest.set_node({x=i, y=m, z=4}, {name="agon:wall"})
-				minetest.set_node({x=i, y=m, z=-4}, {name="agon:wall"})
-			end
-			for i = 21, 29 do
-				minetest.set_node({x=i, y=m, z=14}, {name="agon:wall"})
-				minetest.set_node({x=i, y=m, z=-14}, {name="agon:wall"})
-			end
-			minetest.set_node({x=12, y=m, z=5}, {name="agon:wall"})
-			minetest.set_node({x=13, y=m, z=6}, {name="agon:wall"})
-			minetest.set_node({x=14, y=m, z=7}, {name="agon:wall"})
-			minetest.set_node({x=15, y=m, z=8}, {name="agon:wall"})
-			minetest.set_node({x=16, y=m, z=9}, {name="agon:wall"})
-			minetest.set_node({x=17, y=m, z=10}, {name="agon:wall"})
-			minetest.set_node({x=18, y=m, z=11}, {name="agon:wall"})
-			minetest.set_node({x=19, y=m, z=12}, {name="agon:wall"})
-			minetest.set_node({x=20, y=m, z=13}, {name="agon:wall"})
-			minetest.set_node({x=12, y=m, z=-5}, {name="agon:wall"})
-			minetest.set_node({x=13, y=m, z=-6}, {name="agon:wall"})
-			minetest.set_node({x=14, y=m, z=-7}, {name="agon:wall"})
-			minetest.set_node({x=15, y=m, z=-8}, {name="agon:wall"})
-			minetest.set_node({x=16, y=m, z=-9}, {name="agon:wall"})
-			minetest.set_node({x=17, y=m, z=-10}, {name="agon:wall"})
-			minetest.set_node({x=18, y=m, z=-11}, {name="agon:wall"})
-			minetest.set_node({x=19, y=m, z=-12}, {name="agon:wall"})
-			minetest.set_node({x=20, y=m, z=-13}, {name="agon:wall"})
-			minetest.set_node({x=38, y=m, z=5}, {name="agon:wall"})
-			minetest.set_node({x=37, y=m, z=6}, {name="agon:wall"})
-			minetest.set_node({x=36, y=m, z=7}, {name="agon:wall"})
-			minetest.set_node({x=35, y=m, z=8}, {name="agon:wall"})
-			minetest.set_node({x=34, y=m, z=9}, {name="agon:wall"})
-			minetest.set_node({x=33, y=m, z=10}, {name="agon:wall"})
-			minetest.set_node({x=32, y=m, z=11}, {name="agon:wall"})
-			minetest.set_node({x=31, y=m, z=12}, {name="agon:wall"})
-			minetest.set_node({x=30, y=m, z=13}, {name="agon:wall"})
-			minetest.set_node({x=38, y=m, z=-5}, {name="agon:wall"})
-			minetest.set_node({x=37, y=m, z=-6}, {name="agon:wall"})
-			minetest.set_node({x=36, y=m, z=-7}, {name="agon:wall"})
-			minetest.set_node({x=35, y=m, z=-8}, {name="agon:wall"})
-			minetest.set_node({x=34, y=m, z=-9}, {name="agon:wall"})
-			minetest.set_node({x=33, y=m, z=-10}, {name="agon:wall"})
-			minetest.set_node({x=32, y=m, z=-11}, {name="agon:wall"})
-			minetest.set_node({x=31, y=m, z=-12}, {name="agon:wall"})
-			minetest.set_node({x=30, y=m, z=-13}, {name="agon:wall"})
-		end
-		for i = 4, 10 do
-			for j = 0, 4 do
-				minetest.set_node({x=i, y=13, z=j}, {name="agon:meselamp"})
-				minetest.set_node({x=i, y=13, z=(-1)*j}, {name="agon:meselamp"})
-			end
-		end
-		for i = 21, 29 do
-			minetest.set_node({x=i, y=13, z=14}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=13, z=-14}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=14, z=13}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=14, z=-13}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=15, z=12}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=15, z=-12}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=16, z=11}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=16, z=-11}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=17, z=10}, {name="agon:meselamp"})
-			minetest.set_node({x=i, y=17, z=-10}, {name="agon:meselamp"})
-		end
-		for j = 0, 4 do
-			minetest.set_node({x=11, y=13, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=11, y=13, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=39, y=13, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=39, y=13, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=12, y=14, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=12, y=14, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=38, y=14, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=38, y=14, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=13, y=15, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=13, y=15, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=37, y=15, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=37, y=15, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=14, y=16, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=14, y=16, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=36, y=16, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=36, y=16, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=15, y=17, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=15, y=17, z=(-1)*j}, {name="agon:meselamp"})
-			minetest.set_node({x=35, y=17, z=j}, {name="agon:meselamp"})
-			minetest.set_node({x=35, y=17, z=(-1)*j}, {name="agon:meselamp"})
-		end
-		for i = 16, 34 do
-			for j = 0, 9 do
-				minetest.set_node({x=i, y=18, z=j}, {name="agon:meselamp"})
-				minetest.set_node({x=i, y=18, z=(-1)*j}, {name="agon:meselamp"})
-			end
-		end
-		minetest.set_node({x=12, y=13, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=13, y=13, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=13, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=13, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=13, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=13, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=13, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=13, z=12}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=13, z=13}, {name="agon:meselamp"})
-		minetest.set_node({x=12, y=13, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=13, y=13, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=13, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=13, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=13, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=13, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=13, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=13, z=-12}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=13, z=-13}, {name="agon:meselamp"})
-		minetest.set_node({x=38, y=13, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=37, y=13, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=13, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=13, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=13, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=13, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=13, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=13, z=12}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=13, z=13}, {name="agon:meselamp"})
-		minetest.set_node({x=38, y=13, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=37, y=13, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=13, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=13, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=13, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=13, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=13, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=13, z=-12}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=13, z=-13}, {name="agon:meselamp"})
-		minetest.set_node({x=13, y=14, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=14, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=14, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=14, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=14, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=14, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=14, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=14, z=12}, {name="agon:meselamp"})
-		minetest.set_node({x=13, y=14, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=14, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=14, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=14, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=14, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=14, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=14, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=14, z=-12}, {name="agon:meselamp"})
-		minetest.set_node({x=37, y=14, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=14, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=14, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=14, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=14, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=14, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=14, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=14, z=12}, {name="agon:meselamp"})
-		minetest.set_node({x=37, y=14, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=14, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=14, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=14, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=14, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=14, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=14, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=14, z=-12}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=15, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=15, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=15, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=15, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=15, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=15, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=15, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=14, y=15, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=15, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=15, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=15, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=15, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=15, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=15, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=15, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=15, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=15, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=15, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=15, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=15, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=15, z=11}, {name="agon:meselamp"})
-		minetest.set_node({x=36, y=15, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=15, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=15, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=15, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=15, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=15, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=15, z=-11}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=16, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=16, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=16, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=16, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=16, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=16, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=15, y=16, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=16, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=16, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=16, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=16, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=16, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=16, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=16, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=16, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=16, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=16, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=16, z=10}, {name="agon:meselamp"})
-		minetest.set_node({x=35, y=16, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=16, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=16, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=16, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=16, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=16, z=-10}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=17, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=17, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=17, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=17, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=17, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=17, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=17, y=17, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=18, y=17, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=19, y=17, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=20, y=17, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=17, z=5}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=17, z=6}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=17, z=7}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=17, z=8}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=17, z=9}, {name="agon:meselamp"})
-		minetest.set_node({x=34, y=17, z=-5}, {name="agon:meselamp"})
-		minetest.set_node({x=33, y=17, z=-6}, {name="agon:meselamp"})
-		minetest.set_node({x=32, y=17, z=-7}, {name="agon:meselamp"})
-		minetest.set_node({x=31, y=17, z=-8}, {name="agon:meselamp"})
-		minetest.set_node({x=30, y=17, z=-9}, {name="agon:meselamp"})
-		minetest.set_node({x=16, y=9, z=0}, {name="agon:spawn"})
-		minetest.set_node({x=25, y=9, z=9}, {name="agon:spawn"})
-		minetest.set_node({x=34, y=9, z=0}, {name="agon:spawn"})
-		minetest.set_node({x=25, y=9, z=-9}, {name="agon:spawn"})
-		minetest.set_node({x=10, y=11, z=0}, {name="agon:new_w1"})
 	end
 end)
 
@@ -696,7 +445,7 @@ end)
 
 minetest.register_on_respawnplayer(function(player)
 	timer = 1000
-	zw = 0
+	local zw = 0
 	total_monster = 0
 	local player_inv = player:get_inventory()
 	player_inv:set_stack("kills", 1, nil)
@@ -704,13 +453,14 @@ minetest.register_on_respawnplayer(function(player)
 	player_inv:set_stack("zw", 1, "default:dirt "..zw)
 	player_inv:set_size("total_monster", 1)
 	player_inv:set_stack("total_monster", 1, "default:dirt "..total_monster)
-    for _,object in ipairs(minetest.env:get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
+    for _,object in ipairs(minetest.get_objects_inside_radius({x=25, y=10, z=0}, 20)) do
 		if not object:is_player() then
-			if object:get_entity_name() then
+			if object:get_luaentity() then
 				object:remove()
 			end
 		end
 	end
-    player:setpos({x=7, y=10, z=0})
+    player:set_pos({x=7, y=10, z=0})
+	player:set_look_horizontal(3 * math.pi / 2)
     return true
 end)
